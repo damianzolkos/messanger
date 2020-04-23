@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+#leftPanel {
+  float: left;
+  width: 250px;
+  min-height: 100%;
+}
+
+#mainContent {
+  height: 100%;
+  float: right;
+  position: relative;
+  width: calc(100% - 250px);
+}
+
+#header {
+  background: #ffc300;
+  position: relative;
+  max-width: calc(100% - 2 * 20px);
+  height: 60px;
+  padding: 0px 20px;
+  line-height: 60px;
+}
+
+#list {
+  position: relative;
+  background: #333aaa;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+li {
+  padding: 20px;
+  border-bottom: solid #ffc300 1px;
+}
+
+li:hover {
+  background: #ffc300;
+}
+
+#messagesWrapper {
+  position: relative;
+  min-height: calc(100% - 60px);
+  width: 100%;
+  background: #ffc300;
+}
+
+.messageBubble {
+  clear: both;
+  position: relative;
+  max-width: 80%;
+  padding: 8px 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.sent {
+  background: magenta;
+  float: right;
+  border-bottom-right-radius: 0px;
+}
+
+.received {
+  background: palegreen;
+  float: left;
+  border-bottom-left-radius: 0px;
+}
+
+#inputBox {
+  background: #222ccc;
+  position: relative;
+  width: 100%;
+  min-height: 60px;
+}
+
+textarea {
+  position: relative;
+  width: calc(80% - 10px);
+  margin: 12px;
+  padding-top: 12px;
+  padding-left: 10px;
+}
+
+.messageExtras {
+  position: inherit;
+}
+
+/*# sourceMappingURL=style.css.map */
