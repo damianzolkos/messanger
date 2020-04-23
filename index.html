@@ -11,8 +11,8 @@
 
 <body>
     <div id="leftPanel">
-        <div id="header">
-            <input type="text" />
+        <div class="header red-gradient">
+            <input placeholder="search..." type="text" />
         </div>
         <div id="list">
             <ul>
@@ -35,15 +35,25 @@
         </div>
     </div>
     <div id="mainContent">
+        <div class="header">header</div>
         <div id="messagesWrapper">
             <div class="messageWrapper">
                 <p class="messageBubble sent">Lorem ipsum dolor fit amet.</p>
             </div>
             <div class="messageWrapper">
-                <p class="messageBubble received">Lorem ipsum dolor fit amet.
+                <p class="messageBubble sent">Lorem ipsum dolor fit amet.</p>
+            </div>
+            <div class="messageWrapper">
+                <p class="messageBubble received">Lorem ipsum dolor fit amet.</p>
+            </div>
+            <div class="messageWrapper">
+                <p class="messageBubble received">Lorem ipsum dolor fit amet.</p>
+            </div>
+            <div class="messageWrapper">
+                <p class="messageBubble sent">Lorem ipsum dolor fit amet.</p>
             </div>
         </div>
-        <div id="inputBox">
+        <div id="inputBox" class="red-gradient">
             <textarea autofocus="true" placeholder="Enter message..." wrap="virtual" class="inputTextarea"></textarea>
         </div>
     </div>

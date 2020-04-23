@@ -1,15 +1,19 @@
 $headerPadding: 20px;
-$headerBackground: #ffc300;
+$headerBackground: #919191;
+$leftPanelBackground: #e73f3f;
 $headerHeight: 60px;
 $inputBoxHeight: 60px;
 $leftPanelWidth: 250px;
+$sentBubbleBackground: #e73f3f;
+$receivedBubbleBackground: #999;
 
 * {
     margin: 0;
     padding: 0;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     top: 0;
@@ -20,45 +24,52 @@ html, body {
     float: left;
     width: $leftPanelWidth;
     min-height: 100%;
+    background-color: $leftPanelBackground;
 }
 
 #mainContent {
-    height: 100%;
     float: right;
     position: relative;
     width: calc(100% - #{$leftPanelWidth});
+    height: calc(100% - #{$headerHeight});
 }
 
-#header {
+.header {
     background: $headerBackground;
     position: relative;
-    max-width: calc(100% - 2 * #{$headerPadding});
     height: $headerHeight;
+    max-width: calc(100% - 2 * #{$headerPadding});
     padding: 0px $headerPadding;
     line-height: $headerHeight;
 }
 
+.red-gradient {
+    background: -moz-linear-gradient(top, #ff6b6b 0%, #ee5253 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #ff6b6b 0%, #ee5253 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #ff6b6b 0%, #ee5253 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
 #list {
     position: relative;
-    background: #333aaa;
     min-width: 100%;
-    min-height: 100%;
+    height: calc(100% - #{$headerHeight});
 }
 
 li {
     padding: 20px;
-    border-bottom: solid $headerBackground 1px;
 }
 
-li:hover {
-    background: $headerBackground;
-}
+li:hover {}
 
 #messagesWrapper {
     position: relative;
-    min-height: calc(100% - #{$inputBoxHeight});
+    min-height: calc(100% - #{$inputBoxHeight} - 40px);
     width: 100%;
-    background: #ffc300;
+    background: #fff;
+    margin: 20px 0px;
 }
 
 .messageBubble {
@@ -67,35 +78,55 @@ li:hover {
     max-width: 80%;
     padding: 8px 20px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 2px 10px;
 }
 
 .sent {
-    background: magenta;
+    background: $sentBubbleBackground;
     float: right;
     border-bottom-right-radius: 0px;
 }
 
 .received {
-    background: palegreen;
+    background: $receivedBubbleBackground;
     float: left;
     border-bottom-left-radius: 0px;
 }
 
 #inputBox {
-    background: #222ccc;
     position: relative;
     width: 100%;
     min-height: $inputBoxHeight;
 }
 
+input {
+    margin-left: -12px;
+    background: rgba(225, 225, 225, 0.4);
+    padding: 10px;
+    border-radius: 6px;
+    border: 0px;
+    width: 100%;
+    color: #111;
+}
+
 textarea {
+    margin-top: 10px;
+    margin-left: 10px;
     position: relative;
     width: calc(80% - 10px);
-    // min-height: calc(40px - 16px);
-    margin: 12px;
-    padding-top: 12px;
     padding-left: 10px;
+    padding-top: 14px;
+    border: 0;
+    font-size: 11pt;
+    line-height: 14px;
+    border-radius: 6px;
+    border: 0px;
+    background: rgba(226, 226, 226, 0.4);
+    color: #111;
+}
+
+::placeholder {
+    color: #222;
 }
 
 .messageExtras {
