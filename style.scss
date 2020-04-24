@@ -2,6 +2,7 @@ $headerPadding: 20px;
 $headerBackground: #ededed;
 $mainColor: #144aa4;
 $accentColor: #093183;
+$hoverColor: #1653bb;
 $leftPanelBackground: $mainColor;
 $headerHeight: 60px;
 $inputBoxHeight: 60px;
@@ -13,6 +14,19 @@ $receivedBubbleBackground: #ededed;
     margin: 0;
     padding: 0;
     outline: none;
+}
+
+::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+    width: 12px;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 4px solid transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 0 10px;
+    color: rgba(0, 0, 0, 0.3);
 }
 
 html,
@@ -68,7 +82,9 @@ li {
     display: block;
 }
 
-li:hover {}
+li:hover {
+    background: $hoverColor;
+}
 
 .name {
     font-size: 11pt;
@@ -136,6 +152,7 @@ li img {
     max-width: 80%;
     font-size: 28pt;
     margin: 2px 5px;
+    color: #111;
 }
 
 .sent {
