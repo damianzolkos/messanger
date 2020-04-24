@@ -7,57 +7,65 @@
     <meta name="description" content="Messanger">
     <meta name="author" content="Damaian Żółkoś">
     <link rel="stylesheet" href="style.css?v=1.0">
+    <script src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div id="leftPanel">
-        <div class="header red-gradient">
-            <input placeholder="search..." type="text" />
+        <div class="header blue">
+            <input placeholder="search..." onkeyup="myFunction()" id="myInput" type="text" />
         </div>
         <div id="list">
-            <ul>
-                <li>
-                    <img src="avatar.png">
-                    <p class="name">Lorem ipsum</p>
-                    <p>wiadomosc</p>
+            <ul id="myUL">
+                <li class="active">
+                    <div class="imgWrapper"><img src="avatar.png"></div>
+                    <div class="infoWrapper">
+                        <p class="name">Joan Appleseed</p>
+                        <p class="message">Hi, how are you?</p>
+                    </div>
                 </li>
                 <li>
-                    <img src="avatar.png">
-                    <p class="name">Lorem ipsum</p>
-                    <p>wiadomosc</p>
+                    <div class="imgWrapper"><img src="avatar.png"></div>
+                    <div class="infoWrapper">
+                        <p class="name">Joan Berryseed</p>
+                        <p class="message">Hi, how are you?</p>
+                    </div>
                 </li>
                 <li>
-                    <img src="avatar.png">
-                    <p class="name">Lorem ipsum</p>
-                    <p>wiadomosc</p>
+                    <div class="imgWrapper"><img src="avatar.png"></div>
+                    <div class="infoWrapper">
+                        <p class="name">Joan Weedseed</p>
+                        <p class="message">Hi, how are you?</p>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
     <div id="mainContent">
-        <div class="header">header</div>
+        <div class="header border-bottom big">John Appleseed</div>
         <div id="messagesWrapper">
             <div class="messageWrapper">
-                <p class="messageBubble sent">Lorem ipsum dolor fit amet.</p>
+                <p class="messageBubble sent sentBackground">Lorem ipsum dolor fit amet.</p>
             </div>
             <div class="messageWrapper">
-                <p class="messageBubble sent">Lorem ipsum dolor fit amet.</p>
+                <p class="messageBubble sent sentBackground">Lorem ipsum dolor fit amet.</p>
             </div>
             <div class="messageWrapper">
-                <p class="messageBubble received">Lorem ipsum dolor fit amet.</p>
+                <p class="messageBubble received receivedBackground">Lorem ipsum dolor fit amet.</p>
             </div>
             <div class="messageWrapper">
-                <p class="messageBubble received">Lorem ipsum dolor fit amet.</p>
+                <p class="messageBubble received receivedBackground">Lorem ipsum dolor fit amet.</p>
             </div>
             <div class="messageWrapper">
-                <p class="messageBubble sent">Lorem ipsum dolor fit amet.</p>
+                <p class="messageBubble sent sentBackground">Lorem ipsum dolor fit amet.</p>
             </div>
         </div>
-        <div id="inputBox" class="red-gradient">
-            <textarea autofocus="true" placeholder="Enter message..." wrap="virtual" class="inputTextarea"></textarea>
+        <div id="inputBox">
+            <input onkeypress="onTextInput()" id="textarea" autofocus="true" placeholder="Enter message..."
+                wrap="virtual" class="inputTextarea"></textarea>
         </div>
     </div>
-
 </body>
 
 </html>
