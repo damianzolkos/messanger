@@ -1,0 +1,18 @@
+{
+    "uuid": "0000-0000-0000-0005",
+    "name": "Emilka",
+    "email": "emilka@gmail.com",
+    "status": "active",
+    "friends": [
+        {
+            "name": "Damian",
+            "uuid": "0000-0000-0000-0001"
+        }
+    ],
+    "conversations": [
+        {
+            "name": "Damian",
+            "uuid": "0000-0000-0000-0001"
+        }
+    ]
+}

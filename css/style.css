@@ -29,7 +29,7 @@ body {
 #leftPanel {
   float: left;
   width: 250px;
-  min-height: 100%;
+  height: 100%;
   background-color: #144aa4;
 }
 
@@ -49,38 +49,109 @@ body {
   line-height: 60px;
 }
 
+#user {
+  background: #093183;
+  position: relative;
+  padding: 0px 10px;
+  width: calc(100% - 20px);
+  height: 60px;
+  border-top: 2px solid #1653bb;
+  line-height: 60px;
+}
+
+#userName {
+  float: left;
+  font-size: 11pt;
+  color: #fff;
+  font-weight: 300;
+  margin-left: 10px;
+}
+
+#userStatus {
+  font-size: 9pt;
+  font-weight: 700;
+  float: right;
+}
+
+.active {
+  color: #00fa00;
+}
+
+.inactive {
+  color: #fa0000;
+}
+
+#user img {
+  display: inline-block;
+  margin: 0 auto;
+  height: 100%;
+  width: auto;
+}
+
+.userImgWrapper {
+  float: left;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+  top: 10px;
+}
+
+.margin-top {
+  top: 10px;
+}
+
 .border-bottom {
   border-bottom: 1px solid #c4c4c4;
 }
 
 .blue {
   background: #144aa4;
+  border-bottom: 2px solid #1653bb;
 }
 
 #list {
   position: relative;
   min-width: 100%;
-  height: calc(100% - 60px);
+  height: calc(100% - 60px - 60px - 2px - 2px);
   color: #fff;
   font-weight: 300;
+  overflow-y: scroll;
 }
 
 li {
-  padding: 12px 20px;
   display: block;
+}
+
+.bigli {
+  padding: 12px 20px;
+}
+
+.smallli {
+  padding: 4px 20px;
 }
 
 li:hover {
   background: #1653bb;
 }
 
-.name {
+.bigname {
+  font-size: 11pt;
+  font-weight: 400;
+}
+
+.smallname {
+  margin-top: 8px;
   font-size: 11pt;
   font-weight: 400;
 }
 
 .message {
   font-size: 10pt;
+  max-height: 20px;
+  overflow: hidden;
 }
 
 li img {
@@ -107,17 +178,20 @@ li img {
   width: calc(100% - 40px - 10px);
 }
 
-.active {
+.activeConv {
   background: #093183;
 }
 
 #messagesWrapper {
   position: relative;
   height: calc(100% - 60px - 40px - 2px - 1px);
-  width: 100%;
+  max-width: 100%;
+  min-width: 200px;
   background: #feffff;
   padding: 20px 0px;
   overflow-y: scroll;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 .messageBubble {
@@ -129,6 +203,7 @@ li img {
   margin: 2px 10px;
   font-weight: 300;
   font-size: 11pt;
+  overflow-x: visible;
 }
 
 .big {
@@ -164,6 +239,20 @@ li img {
   border: 1px solid #c0c0c0;
 }
 
+.seen {
+  clear: both;
+  display: none;
+  position: relative;
+  float: right;
+  margin-right: 10px;
+  font-size: 9pt;
+  font-weight: 300;
+}
+
+#messagesWrapper *:last-child .seen:last-child {
+  display: block;
+}
+
 #inputBox {
   background: #cfcfcf;
   position: relative;
@@ -179,7 +268,6 @@ input {
   border-radius: 6px;
   border: 0px;
   width: 100%;
-  color: #111;
 }
 
 #textarea {

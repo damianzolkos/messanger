@@ -3,43 +3,27 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Messanger</title>
+    <title>Messages</title>
     <meta name="description" content="Messanger">
     <meta name="author" content="Damaian Żółkoś">
-    <link rel="stylesheet" href="style.css?v=1.0">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="css/style.css?v=1.0">
+    <script src="js/script.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div id="leftPanel">
         <div class="header blue">
-            <input placeholder="search..." onkeyup="myFunction()" id="myInput" type="text" />
+            <input placeholder="search..." onkeyup="searchUser()" id="myInput" type="text" />
         </div>
         <div id="list">
             <ul id="myUL">
-                <li class="active">
-                    <div class="imgWrapper"><img src="avatar.png"></div>
-                    <div class="infoWrapper">
-                        <p class="name">Joan Appleseed</p>
-                        <p class="message">Hi, how are you?</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="imgWrapper"><img src="avatar.png"></div>
-                    <div class="infoWrapper">
-                        <p class="name">Joan Berryseed</p>
-                        <p class="message">Hi, how are you?</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="imgWrapper"><img src="avatar.png"></div>
-                    <div class="infoWrapper">
-                        <p class="name">Joan Weedseed</p>
-                        <p class="message">Hi, how are you?</p>
-                    </div>
-                </li>
             </ul>
+        </div>
+        <div id="user">
+            <p  class="userImgWrapper"><img id="userAvatar" src=""></p>
+            <span id="userName"></span>
+            <span id="userStatus"></span>
         </div>
     </div>
     <div id="mainContent">
@@ -59,6 +43,7 @@
             </div>
             <div class="messageWrapper">
                 <p class="messageBubble sent sentBackground">Lorem ipsum dolor fit amet.</p>
+                <div class="seen">seen</div>
             </div>
         </div>
         <div id="inputBox">

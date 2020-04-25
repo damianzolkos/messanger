@@ -1,0 +1,36 @@
+{
+    "uuid": "0000-0000-0000-0001",
+    "name": "Damian",
+    "email": "damianzolkos@gmail.com",
+    "status": "active",
+    "friends": [
+        {
+            "name": "Kasia",
+            "uuid": "0000-0000-0000-0002"
+        },
+        {
+            "name": "Monika",
+            "uuid": "0000-0000-0000-0003"
+        },
+        {
+            "name": "Jola",
+            "uuid": "0000-0000-0000-0004"
+        },
+        {
+            "name": "Emilka",
+            "uuid": "0000-0000-0000-0005"
+        }
+    ],
+    "conversations": [
+        {
+            "name": "Kasia",
+            "uuid": "0000-0000-0000-0002",
+            "lastMessage": "Lorem ipsum"
+        },
+        {
+            "name": "Monika",
+            "uuid": "0000-0000-0000-0003",
+            "lastMessage": "Dolor fit amet"
+        }
+    ]
+}
