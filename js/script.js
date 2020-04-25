@@ -3,6 +3,8 @@ var canPublish = true;
 var throttleTime = 500;
 
 var userData;
+var conversations = [];
+var activeUUID;
 
 async function getData(url) {
     const data = await fetch(url)
@@ -24,20 +26,31 @@ async function getData(url) {
 
 async function loadUserData() {
     userData = await getData("./user.json");
-    console.log(userData);
+    console.log("user data", userData);
     userUUID = userData.uuid;
     document.getElementById("userName").innerHTML = userData.name;
     document.getElementById("userStatus").innerHTML = userData.status;
     document.getElementById("userStatus").className = userData.status;
     document.getElementById("userAvatar").src = "user.png";
-    var notIncludesConversations = userData.friends;
 
-    userData.conversations.sort((a, b) => (a.time > b.time) ? 1 : -1)
-    console.log(userData.conversations[0].uuid);
+    userData.friends.sort((a, b) => (a.importance > b.importance) ? 1 : -1)
 
-    // tworzenie listy rozmów
+    // tworzenie rozmów
     for (let i = 0; i < userData.conversations.length; i++) {
-        let friendData = await getData("users/" + userData.conversations[i].uuid + ".json");
+        conversations[i] = await getData("conversations/" + userData.conversations[i].uuid + ".json");
+        console.log("conversation with " + conversations[i].name, conversations[i]);
+    }
+    activeUUID = userData.conversations[0].uuid;
+    // tworzenie listy znajomych
+    renderFriendsList();
+}
+loadUserData();
+
+async function renderFriendsList() {
+    userData.friends.sort((a, b) => (a.importance > b.importance) ? -1 : 1)
+    document.getElementById("myUL").innerHTML = "";
+    for (let i = 0; i < userData.friends.length; i++) {
+        let friendData = await getData("users/" + userData.friends[i].uuid + ".json");
         console.log("friends data: ", friendData);
 
         let imgWrapper = document.createElement("div");
@@ -49,113 +62,120 @@ async function loadUserData() {
         let infoWrapper = document.createElement("div");
         infoWrapper.className = "infoWrapper";
         let name = document.createElement("p");
-        name.className = "bigname";
+        name.className = "name";
         name.innerHTML = friendData.name;
-        let message = document.createElement("p");
-        message.className = "message";
-        message.innerHTML = userData.conversations[i].lastMessage;
         infoWrapper.appendChild(name);
-        infoWrapper.appendChild(message);
 
         let li = document.createElement("li");
-        li.className = "bigli";
-        li.id = userData.conversations[i].uuid;
+        li.id = friendData.uuid;
         li.appendChild(imgWrapper);
         li.appendChild(infoWrapper);
         li.setAttribute('onclick', "changeConv('" + friendData.uuid + "')");
         document.getElementById("myUL").appendChild(li);
-        notIncludesConversations = notIncludesConversations.filter(item => !item.name.includes(userData.conversations[i].name));
     }
-
-    console.log(notIncludesConversations);
-    renderConv(userData.conversations[0].uuid);
-
-    // tworzenie listy znajomych
-    for (let i = 0; i < notIncludesConversations.length; i++) {
-        let friendData = await getData("users/" + notIncludesConversations[i].uuid + ".json");
-        console.log("friends data: ", friendData);
-
-        let imgWrapper = document.createElement("div");
-        imgWrapper.className = "imgWrapper";
-        let img = document.createElement("img");
-        img.src = "users/" + friendData.uuid + ".png";
-        imgWrapper.appendChild(img);
-
-        let infoWrapper = document.createElement("div");
-        infoWrapper.className = "infoWrapper";
-        let name = document.createElement("p");
-        name.className = "smallname";
-        name.innerHTML = friendData.name;
-        let message = document.createElement("p");
-        infoWrapper.appendChild(name);
-
-        let li = document.createElement("li");
-        li.className = "smallli";
-        li.id = friendData.uuid;
-        li.appendChild(imgWrapper);
-        li.appendChild(infoWrapper);
-        // li.setAttribute('onclick', "newConv('" + friendData.uuid + "')");
-        document.getElementById("myUL").appendChild(li);
-    }
+    changeConv(activeUUID);
 }
-loadUserData();
 
 function changeConv(uuid) {
     document.getElementById("messagesWrapper").innerHTML = "";
+    activeUUID = uuid;
     renderConv(uuid);
 }
 
-async function renderConv(uuid) {
-    for (let i = 0; i < userData.conversations.length; i++) {
-        document.getElementById(userData.conversations[i].uuid).className = "bigli";
-    }
-
-    document.getElementById(uuid).className = "bigli activeConv";
-    let convData = await getData("conversations/" + uuid + ".json");
-    document.getElementById("convName").innerHTML = convData.name;
-
-    convData.messages.sort((a, b) => (a.time > b.time) ? 1 : -1)
-    for (let i = 0; i < convData.messages.length; i++) {
-        if (convData.messages[i].user != userUUID) {
-            newMessage(convData.messages[i].message);
-        } else {
-            let messageWrapper = document.createElement("div");
-            let messageBubble = document.createElement("p");
-            let seenBubble = document.createElement("div");
-            seenBubble.className = "seen";
-            seenBubble.innerHTML = "seen";
-            messageWrapper.className = "messageWrapper";
-            if (isEmoji(convData.messages[i].message)) messageBubble.className = "emojiBubble sent";
-            else messageBubble.className = "messageBubble sent sentBackground";
-            messageBubble.innerHTML = convData.messages[i].message;
-            messageWrapper.appendChild(messageBubble);
-            messageWrapper.appendChild(seenBubble);
-            document.getElementById("messagesWrapper").appendChild(messageWrapper);
-            updateScroll();
+function findObjectByKey(array, key, value) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][key] === value) {
+            return array[i];
         }
     }
+    return false;
 }
 
-async function newConv(uuid) {
-    document.getElementById("messagesWrapper").innerHTML = "";
+function renderConv(uuid) {
+    let convData;
 
-    for (let i = 0; i < userData.conversations.length; i++) {
-        document.getElementById(userData.conversations[i].uuid).className = "bigli";
+    for (let i = 0; i < userData.friends.length; i++) {
+        document.getElementById(userData.friends[i].uuid).className = "";
     }
 
-    document.getElementById(uuid).className = "smallli activeConv";
+    document.getElementById(uuid).className = "activeConv";
+    if (findObjectByKey(conversations, "uuid", uuid)) {
+        convData = findObjectByKey(conversations, "uuid", uuid);
+        document.getElementById("convName").innerHTML = convData.name;
+        convData.messages.sort((a, b) => (a.time > b.time) ? 1 : -1)
+        if (convData.messages.length > 0) {
+            for (let i = 0; i < convData.messages.length; i++) {
+                if (convData.messages[i].user != userUUID) {
+                    renderMessage(convData.messages[i].message, "received");
+                } else {
+                    renderMessage(convData.messages[i].message, "sent");
+                }
+            }
+        } else {
+            let zeroMsg = document.createElement("div");
+            zeroMsg.id = "zeroMessages";
+            zeroMsg.style.display = "block";
+            zeroMsg.innerHTML = "say something nice :3"
+            document.getElementById("messagesWrapper").appendChild(zeroMsg);
+        }
+    } else {
+        newConv(uuid);
+    }
 }
 
-function newMessage(message) {
-    let messageWrapper = document.createElement("div");
-    let messageBubble = document.createElement("p");
-    messageWrapper.className = "messageWrapper";
-    if (isEmoji(message)) messageBubble.className = "emojiBubble";
-    else messageBubble.className = "messageBubble received receivedBackground";
-    messageBubble.innerHTML = message;
-    messageWrapper.appendChild(messageBubble);
-    document.getElementById("messagesWrapper").appendChild(messageWrapper);
+function newConv(uuid) {
+    conversations[conversations.length] = {
+        "uuid": uuid,
+        "name": findObjectByKey(userData.friends, "uuid", uuid).name,
+        "messages": []
+    };
+    userData.conversations[userData.conversations.length] = {
+        "name": findObjectByKey(userData.friends, "uuid", uuid).name,
+        "uuid": uuid,
+        "time": Date.now()
+    };
+    renderConv(uuid);
+    // renderFriendsList();
+}
+
+function renderMessage(message, type) {
+    if (type === "received") {
+        let messageWrapper = document.createElement("div");
+        let messageBubble = document.createElement("p");
+        messageWrapper.className = "messageWrapper";
+        if (isEmoji(message)) messageBubble.className = "emojiBubble";
+        else messageBubble.className = "messageBubble received receivedBackground";
+        messageBubble.innerHTML = message;
+        messageWrapper.appendChild(messageBubble);
+        document.getElementById("messagesWrapper").appendChild(messageWrapper);
+    } else if (type === "sent") {
+        let messageWrapper = document.createElement("div");
+        let messageBubble = document.createElement("p");
+        let seenBubble = document.createElement("div");
+        seenBubble.className = "seen";
+        seenBubble.innerHTML = "seen";
+        messageWrapper.className = "messageWrapper";
+        if (isEmoji(message)) messageBubble.className = "emojiBubble sent";
+        else messageBubble.className = "messageBubble sent sentBackground";
+        messageBubble.innerHTML = message;
+        messageWrapper.appendChild(messageBubble);
+        messageWrapper.appendChild(seenBubble);
+        document.getElementById("messagesWrapper").appendChild(messageWrapper);
+    }
     updateScroll();
+}
+
+function receivedMessage(uuid, message) {
+    let convData = findObjectByKey(conversations, "uuid", uuid);
+    console.log("convData", convData);
+    convData.messages[convData.messages.length] = {
+        "time": Date.now(),
+        "user": uuid,
+        "message": message
+    };
+    if (uuid === activeUUID) {
+        renderMessage(message, "received");
+    }
 }
 
 function onTextInput() {
@@ -163,20 +183,20 @@ function onTextInput() {
     if (key === 13) {
         let text = document.getElementById("textarea").value;
         if (text != "") {
-            let messageWrapper = document.createElement("div");
-            let messageBubble = document.createElement("p");
-            let seenBubble = document.createElement("div");
-            seenBubble.className = "seen";
-            seenBubble.innerHTML = "seen";
-            messageWrapper.className = "messageWrapper";
-            if (isEmoji(text)) messageBubble.className = "emojiBubble sent";
-            else messageBubble.className = "messageBubble sent sentBackground";
-            messageBubble.innerHTML = text;
-            messageWrapper.appendChild(messageBubble);
-            messageWrapper.appendChild(seenBubble);
-            document.getElementById("messagesWrapper").appendChild(messageWrapper);
-            updateScroll();
+            renderMessage(text, "sent")
             document.getElementById("textarea").value = '';
+
+            let convData = findObjectByKey(conversations, "uuid", activeUUID);
+            console.log("convData", convData);
+            convData.messages[convData.messages.length] = {
+                "time": Date.now(),
+                "user": userUUID,
+                "message": text
+            }
+            // najpóźniejsza wiadomość na górze
+            // objIndex = userData.friends.findIndex((obj => obj.uuid == activeUUID));
+            // userData.friends[objIndex].importance = Date.now();
+            // renderFriendsList();
             return true;
         } else return false;
     } else {

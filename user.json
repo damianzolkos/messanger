@@ -5,32 +5,32 @@
     "status": "active",
     "friends": [{
             "name": "Kasia",
+            "uuid": "0000-0000-0000-0002",
+            "importance": 4
+        },
+        {
+            "name": "Monika",
+            "uuid": "0000-0000-0000-0003",
+            "importance": 3
+        },
+        {
+            "name": "Jola",
+            "uuid": "0000-0000-0000-0004",
+            "importance": 1
+        },
+        {
+            "name": "Emilka",
+            "uuid": "0000-0000-0000-0005",
+            "importance": 1
+        }
+    ],
+    "conversations": [{
+            "name": "Kasia",
             "uuid": "0000-0000-0000-0002"
         },
         {
             "name": "Monika",
             "uuid": "0000-0000-0000-0003"
-        },
-        {
-            "name": "Jola",
-            "uuid": "0000-0000-0000-0004"
-        },
-        {
-            "name": "Emilka",
-            "uuid": "0000-0000-0000-0005"
-        }
-    ],
-    "conversations": [{
-            "name": "Kasia",
-            "uuid": "0000-0000-0000-0002",
-            "lastMessage": "Lorem ipsum",
-            "time": "1"
-        },
-        {
-            "name": "Monika",
-            "uuid": "0000-0000-0000-0003",
-            "lastMessage": "Dolor fit amet",
-            "time": "2"
         }
     ]
 }

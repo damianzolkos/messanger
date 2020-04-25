@@ -2,22 +2,22 @@
     "uuid": "0000-0000-0000-0002",
     "name": "Kasia",
     "messages": [{
-            "time": "1",
+            "time": 1,
             "user": "0000-0000-0000-0002",
             "message": "hi, whats up?"
         },
         {
-            "time": "2",
+            "time": 2,
             "user": "0000-0000-0000-0001",
             "message": "not much"
         },
         {
-            "time": "3",
+            "time": 3,
             "user": "0000-0000-0000-0002",
             "message": "ok"
         },
         {
-            "time": "4",
+            "time": 4,
             "user": "0000-0000-0000-0002",
             "message": "😁"
         }

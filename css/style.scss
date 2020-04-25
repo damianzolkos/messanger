@@ -87,6 +87,7 @@ body {
 .active {
     color: rgb(0, 250, 0);
 }
+
 .inactive {
     color: rgb(250, 0, 0);
 }
@@ -134,25 +135,14 @@ body {
 li {
     display: block;
     width: calc(100% - 40px);
-}
-
-.bigli {
-    padding: 12px 20px;
-}
-
-.smallli { 
-    padding: 4px 20px;
+    padding: 8px 20px;
 }
 
 li:hover {
     background: $hoverColor;
 }
 
-.bigname {
-    font-size: 11pt;
-    font-weight: 400;
-}
-.smallname {
+.name {
     margin-top: 8px;
     font-size: 11pt;
     font-weight: 400;
@@ -302,4 +292,14 @@ input {
 
 .messageExtras {
     position: inherit;
+}
+
+#zeroMessages {
+    display: none;
+    font-size: 11pt;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    font-weight: 300;
+    margin-bottom: 10px;
 }
