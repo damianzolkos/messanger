@@ -2,6 +2,8 @@ var typing = false;
 var canPublish = true;
 var throttleTime = 500;
 
+var userData;
+
 async function getData(url) {
     const data = await fetch(url)
         .then(
@@ -21,14 +23,19 @@ async function getData(url) {
 }
 
 async function loadUserData() {
-    let userData = await getData("./user.json");
+    userData = await getData("./user.json");
     console.log(userData);
+    userUUID = userData.uuid;
     document.getElementById("userName").innerHTML = userData.name;
     document.getElementById("userStatus").innerHTML = userData.status;
     document.getElementById("userStatus").className = userData.status;
     document.getElementById("userAvatar").src = "user.png";
     var notIncludesConversations = userData.friends;
 
+    userData.conversations.sort((a, b) => (a.time > b.time) ? 1 : -1)
+    console.log(userData.conversations[0].uuid);
+
+    // tworzenie listy rozmów
     for (let i = 0; i < userData.conversations.length; i++) {
         let friendData = await getData("users/" + userData.conversations[i].uuid + ".json");
         console.log("friends data: ", friendData);
@@ -55,13 +62,15 @@ async function loadUserData() {
         li.id = userData.conversations[i].uuid;
         li.appendChild(imgWrapper);
         li.appendChild(infoWrapper);
+        li.setAttribute('onclick', "changeConv('" + friendData.uuid + "')");
         document.getElementById("myUL").appendChild(li);
-
         notIncludesConversations = notIncludesConversations.filter(item => !item.name.includes(userData.conversations[i].name));
     }
 
     console.log(notIncludesConversations);
+    renderConv(userData.conversations[0].uuid);
 
+    // tworzenie listy znajomych
     for (let i = 0; i < notIncludesConversations.length; i++) {
         let friendData = await getData("users/" + notIncludesConversations[i].uuid + ".json");
         console.log("friends data: ", friendData);
@@ -85,12 +94,69 @@ async function loadUserData() {
         li.id = friendData.uuid;
         li.appendChild(imgWrapper);
         li.appendChild(infoWrapper);
+        // li.setAttribute('onclick', "newConv('" + friendData.uuid + "')");
         document.getElementById("myUL").appendChild(li);
     }
-
-
 }
 loadUserData();
+
+function changeConv(uuid) {
+    document.getElementById("messagesWrapper").innerHTML = "";
+    renderConv(uuid);
+}
+
+async function renderConv(uuid) {
+    for (let i = 0; i < userData.conversations.length; i++) {
+        document.getElementById(userData.conversations[i].uuid).className = "bigli";
+    }
+
+    document.getElementById(uuid).className = "bigli activeConv";
+    let convData = await getData("conversations/" + uuid + ".json");
+    document.getElementById("convName").innerHTML = convData.name;
+
+    convData.messages.sort((a, b) => (a.time > b.time) ? 1 : -1)
+    for (let i = 0; i < convData.messages.length; i++) {
+        if (convData.messages[i].user != userUUID) {
+            newMessage(convData.messages[i].message);
+        } else {
+            let messageWrapper = document.createElement("div");
+            let messageBubble = document.createElement("p");
+            let seenBubble = document.createElement("div");
+            seenBubble.className = "seen";
+            seenBubble.innerHTML = "seen";
+            messageWrapper.className = "messageWrapper";
+            if (isEmoji(convData.messages[i].message)) messageBubble.className = "emojiBubble sent";
+            else messageBubble.className = "messageBubble sent sentBackground";
+            messageBubble.innerHTML = convData.messages[i].message;
+            messageWrapper.appendChild(messageBubble);
+            messageWrapper.appendChild(seenBubble);
+            document.getElementById("messagesWrapper").appendChild(messageWrapper);
+            updateScroll();
+        }
+    }
+}
+
+async function newConv(uuid) {
+    document.getElementById("messagesWrapper").innerHTML = "";
+
+    for (let i = 0; i < userData.conversations.length; i++) {
+        document.getElementById(userData.conversations[i].uuid).className = "bigli";
+    }
+
+    document.getElementById(uuid).className = "smallli activeConv";
+}
+
+function newMessage(message) {
+    let messageWrapper = document.createElement("div");
+    let messageBubble = document.createElement("p");
+    messageWrapper.className = "messageWrapper";
+    if (isEmoji(message)) messageBubble.className = "emojiBubble";
+    else messageBubble.className = "messageBubble received receivedBackground";
+    messageBubble.innerHTML = message;
+    messageWrapper.appendChild(messageBubble);
+    document.getElementById("messagesWrapper").appendChild(messageWrapper);
+    updateScroll();
+}
 
 function onTextInput() {
     var key = window.event.keyCode;

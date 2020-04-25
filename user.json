@@ -3,8 +3,7 @@
     "name": "Damian",
     "email": "damianzolkos@gmail.com",
     "status": "active",
-    "friends": [
-        {
+    "friends": [{
             "name": "Kasia",
             "uuid": "0000-0000-0000-0002"
         },
@@ -21,16 +20,17 @@
             "uuid": "0000-0000-0000-0005"
         }
     ],
-    "conversations": [
-        {
+    "conversations": [{
             "name": "Kasia",
             "uuid": "0000-0000-0000-0002",
-            "lastMessage": "Lorem ipsum"
+            "lastMessage": "Lorem ipsum",
+            "time": "1"
         },
         {
             "name": "Monika",
             "uuid": "0000-0000-0000-0003",
-            "lastMessage": "Dolor fit amet"
+            "lastMessage": "Dolor fit amet",
+            "time": "2"
         }
     ]
 }
