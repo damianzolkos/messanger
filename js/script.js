@@ -35,13 +35,12 @@ async function loadUserData() {
 
     userData.friends.sort((a, b) => (a.importance > b.importance) ? 1 : -1)
 
-    // tworzenie rozmów
     for (let i = 0; i < userData.conversations.length; i++) {
         conversations[i] = await getData("conversations/" + userData.conversations[i].uuid + ".json");
         console.log("conversation with " + conversations[i].name, conversations[i]);
     }
     activeUUID = userData.conversations[0].uuid;
-    // tworzenie listy znajomych
+
     renderFriendsList();
 }
 loadUserData();
@@ -63,8 +62,18 @@ async function renderFriendsList() {
         infoWrapper.className = "infoWrapper";
         let name = document.createElement("p");
         name.className = "name";
+        name.style.marginTop = "8px";
         name.innerHTML = friendData.name;
         infoWrapper.appendChild(name);
+
+        if (findObjectByKey(userData.conversations, "uuid", userData.friends[i].uuid)) {
+            let message = document.createElement("p");
+            message.className = "message";
+            name.style.marginTop = "0px";
+            let objIndex = userData.friends.findIndex((obj => obj.uuid == userData.friends[i].uuid));
+            message.innerHTML = conversations[objIndex].messages[conversations[objIndex].messages.length - 1].message;
+            infoWrapper.appendChild(message);
+        }
 
         let li = document.createElement("li");
         li.id = friendData.uuid;
@@ -193,10 +202,12 @@ function onTextInput() {
                 "user": userUUID,
                 "message": text
             }
+
             // najpóźniejsza wiadomość na górze
             // objIndex = userData.friends.findIndex((obj => obj.uuid == activeUUID));
             // userData.friends[objIndex].importance = Date.now();
             // renderFriendsList();
+
             return true;
         } else return false;
     } else {

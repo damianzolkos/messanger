@@ -4,12 +4,12 @@
     "email": "damianzolkos@gmail.com",
     "status": "active",
     "friends": [{
-            "name": "Kasia",
+            "name": "Kasia Apple",
             "uuid": "0000-0000-0000-0002",
             "importance": 4
         },
         {
-            "name": "Monika",
+            "name": "Monika Berry",
             "uuid": "0000-0000-0000-0003",
             "importance": 3
         },

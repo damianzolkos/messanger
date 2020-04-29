@@ -1,6 +1,6 @@
 {
     "uuid": "0000-0000-0000-0002",
-    "name": "Kasia",
+    "name": "Kasia Apple",
     "messages": [{
             "time": 1,
             "user": "0000-0000-0000-0002",
@@ -20,6 +20,11 @@
             "time": 4,
             "user": "0000-0000-0000-0002",
             "message": "😁"
+        },
+        {
+            "time": 5,
+            "user": "0000-0000-0000-0002",
+            "message": "Lorem ipsum dolor"
         }
     ]
 }
